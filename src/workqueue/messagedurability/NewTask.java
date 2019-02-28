@@ -1,5 +1,6 @@
 package workqueue.messagedurability;
 
+import auth.Auth;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -13,9 +14,9 @@ public class NewTask {
     public static void main(String[] argv) throws Exception {
 //        ...
         ConnectionFactory factory = new ConnectionFactory();
-                            factory.setHost("59.110.71.96");
-                            factory.setUsername("qukoucai");
-                            factory.setPassword("lghlmcl2yhblshqt");
+                            factory.setHost(Auth.HOST.getValue());
+                            factory.setUsername(Auth.USERNAME.getValue());
+                            factory.setPassword(Auth.PASSWORD.getValue());
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             boolean durable = true;
@@ -29,7 +30,7 @@ public class NewTask {
             channel.basicPublish("", TASK_QUEUE_NAME,
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
                     message.getBytes());
-            System.out.println(" [x] Sent '" + message + "'");
+            System.out.println(" [messagedurability] Sent '" + message + "'");
 
             /*
             Note on message persistence

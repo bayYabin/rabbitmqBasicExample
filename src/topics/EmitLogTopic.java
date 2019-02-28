@@ -1,5 +1,6 @@
 package topics;
 
+import auth.Auth;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -12,9 +13,9 @@ public class EmitLogTopic {
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
-                            factory.setHost("59.110.71.96");
-                            factory.setUsername("qukoucai");
-                            factory.setPassword("lghlmcl2yhblshqt");
+                            factory.setHost(Auth.HOST.getValue());
+                            factory.setUsername(Auth.USERNAME.getValue());
+                            factory.setPassword(Auth.PASSWORD.getValue());
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
 

@@ -1,5 +1,6 @@
 package rpc;
 
+import auth.Auth;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -22,9 +23,9 @@ public class RpcClient implements AutoCloseable {
 
     public RpcClient() throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
-                            factory.setHost("59.110.71.96");
-                            factory.setUsername("qukoucai");
-                            factory.setPassword("lghlmcl2yhblshqt");
+                            factory.setHost(Auth.HOST.getValue());
+                            factory.setUsername(Auth.USERNAME.getValue());
+                            factory.setPassword(Auth.PASSWORD.getValue());
         connection = factory.newConnection();
         channel = connection.createChannel();
     }

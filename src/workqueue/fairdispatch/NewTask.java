@@ -1,5 +1,6 @@
 package workqueue.fairdispatch;
 
+import auth.Auth;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -12,16 +13,16 @@ public class NewTask {
     public static void main(String[] argv) throws Exception {
 //        ...
         ConnectionFactory factory = new ConnectionFactory();
-                            factory.setHost("59.110.71.96");
-                            factory.setUsername("qukoucai");
-                            factory.setPassword("lghlmcl2yhblshqt");
+                            factory.setHost(Auth.HOST.getValue());
+                            factory.setUsername(Auth.USERNAME.getValue());
+                            factory.setPassword(Auth.PASSWORD.getValue());
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.queueDeclare(TASK_QUEUE_NAME, false, false, false, null);
             String message = String.join(" ", argv);
 
             channel.basicPublish("",TASK_QUEUE_NAME, null, message.getBytes());
-            System.out.println(" [x] Sent '" + message + "'");
+            System.out.println(" [fairdispatch] Sent '" + message + "'");
 
         }
     }
